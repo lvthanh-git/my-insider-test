@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite parallel="methods" name="ThanhLeTestSuite">
+<suite parallel="tests" name="ThanhLeTestSuite">
 	<parameter name="webURL" value="https://useinsider.com/" />
 	<parameter name="implicitWaitTimeout" value="10" />
 	<parameter name="explicitWaitTimeout" value="10" />
 	<parameter name="pageLoadTimeout" value="30" />
 	
-	
-	<!--<test thread-count="5" parallel="methods" name="ChromeTest">
+	<test thread-count="5" parallel="methods" name="ChromeTest">
 		<parameter name="browser" value="Chrome" />
 		<classes>
 			<class
 				name="thanhle.insider.web.CareersTest" />
 		</classes>
-	</test>-->
+	</test>
 	
 	<test thread-count="5" parallel="methods" name="FireFoxTest">
 		<parameter name="browser" value="FireFox" />

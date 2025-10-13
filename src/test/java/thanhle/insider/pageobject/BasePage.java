@@ -1,12 +1,12 @@
 package thanhle.insider.pageobject;
 
-import org.openqa.selenium.WebDriver;
+import thanhle.insider.customazation.Driver;
 
 public class BasePage {
 	
-	protected WebDriver driver;
+	protected Driver driver;
 	
-	public BasePage(WebDriver driver) {
+	public BasePage(Driver driver) {
 		this.driver = driver;		
 	}
 	

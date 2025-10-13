@@ -4,9 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import thanhle.insider.customazation.Driver;
+
 public class GeneralPage extends BasePage{
 	
-	public GeneralPage(WebDriver driver) {
+	public GeneralPage(Driver driver) {
 		super(driver);
 	}
 

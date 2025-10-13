@@ -1,26 +1,19 @@
 package thanhle.insider.pageobject;
 
-import java.time.Duration;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import thanhle.insider.customazation.Driver;
 
 public class HomePage extends GeneralPage{
 	
-	public HomePage(WebDriver driver) {
+	public HomePage(Driver driver) {
 		super(driver);
 		waitForPageDisplayed();
 	}
 	
 	public void waitForPageDisplayed() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(getLnkLogin()));
-	}
+		driver.waitUntilVisible(lnkLoginLoc);
+	}	
 	
-	
-	public boolean isDisplayed() {	
-		
+	public boolean isDisplayed() {		
 		boolean isLnkLoginDisplayed = getLnkLogin().isDisplayed();
 		boolean isMenuCompanyDisplayed = getMenuCompany().isDisplayed();
 		

@@ -13,9 +13,10 @@ public class CareersTest extends BaseTest{
 		HomePage homePage = new HomePage(drivers.get());
 		homePage.acceptCookies();
 		
-		boolean isHomePageDisplayed = homePage.isDisplayed();
-		
+		boolean isHomePageDisplayed = homePage.isDisplayed();		
 		assertEquals(isHomePageDisplayed, true, "Home page is not displayed.");
+		
+		
 	}
 
 	
