@@ -42,10 +42,16 @@ public class Driver {
 		return driver;
 	}
 	
-	public List<WebElement> waitUntilVisible(By by) {
+	public WebElement waitUntilElementVisible(By by) {
+		WebDriverWait wait = getWait();
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
+	
+	public List<WebElement> waitUntilElementsVisible(By by) {
 		WebDriverWait wait = getWait();
 		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
 	}
+	
 	
 	public WebElement findElement(By by) {
 		try {
@@ -55,6 +61,16 @@ public class Driver {
 			throw e;
 		}
 	}
+	
+	public List<WebElement> findElements(By by) {
+		try {
+			return driver.findElements(by);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	
 	
 	

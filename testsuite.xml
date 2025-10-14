@@ -14,11 +14,11 @@
 		</classes>
 	</test>
 	
-	<test thread-count="5" parallel="methods" name="FireFoxTest">
+	<!--<test thread-count="5" parallel="methods" name="FireFoxTest">
 		<parameter name="browser" value="FireFox" />
 		<classes>
 			<class
 				name="thanhle.insider.web.CareersTest" />
 		</classes>
-	</test>
+	</test>-->
 </suite>

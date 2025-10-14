@@ -10,7 +10,7 @@ public class HomePage extends GeneralPage{
 	}
 	
 	public void waitForPageDisplayed() {
-		driver.waitUntilVisible(lnkLoginLoc);
+		driver.waitUntilElementVisible(lnkLoginLoc);
 	}	
 	
 	public boolean isDisplayed() {		
