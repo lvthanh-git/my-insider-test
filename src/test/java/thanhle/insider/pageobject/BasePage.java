@@ -1,17 +1,11 @@
 package thanhle.insider.pageobject;
 
-import thanhle.insider.customazation.Driver;
+import thanhle.insider.customazation.DriverManager;
 
 public class BasePage {
 	
-	protected Driver driver;
-	
-	public BasePage(Driver driver) {
-		this.driver = driver;		
-	}
-	
 	public String getURL() {
-		return driver.getWebDriver().getCurrentUrl();
+		return DriverManager.getDriver().getWebDriver().getCurrentUrl();
 	}	
 	
 }

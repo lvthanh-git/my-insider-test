@@ -3,12 +3,11 @@ package thanhle.insider.pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import thanhle.insider.customazation.Driver;
+import thanhle.insider.customazation.DriverManager;
 
 public class CareersPage extends GeneralPage{
 	
-	public CareersPage(Driver driver) {
-		super(driver);
+	public CareersPage() {
 		waitForPageDisplayed();
 	}
 	
@@ -19,20 +18,20 @@ public class CareersPage extends GeneralPage{
 	private By btnSeeAllTeamsLoc = By.xpath("//a[text()='See all teams']");
 	
 	protected WebElement getBlockLocations() {
-		return driver.findElement(blockLocationsLoc);
+		return DriverManager.getDriver().findElement(blockLocationsLoc);
 	}
 	
 	protected WebElement getBlockLife() {
-		return driver.findElement(blockLifeLoc);
+		return DriverManager.getDriver().findElement(blockLifeLoc);
 	}
 	
 	protected WebElement getBlockTeams() {
-		return driver.findElement(blockTeamsLoc);
+		return DriverManager.getDriver().findElement(blockTeamsLoc);
 	}
 	
 	
 	public void waitForPageDisplayed() {
-		driver.waitUntilElementVisible(pageHeaderLoc);
+		DriverManager.getDriver().waitUntilElementVisible(pageHeaderLoc);
 	}
 	
 	public boolean isLocationsBlockDisplayed() {
@@ -48,14 +47,14 @@ public class CareersPage extends GeneralPage{
 	}
 	
 	protected WebElement getBtnSeeAllTeams() {
-		return driver.findElement(btnSeeAllTeamsLoc);
+		return DriverManager.getDriver().findElement(btnSeeAllTeamsLoc);
 	}
 	
-	public CareersTeamPage gotoCareersTeamPage(String teamName) {
-		getBtnSeeAllTeams().click();		
-		driver.findElement(By.xpath(String.format("//a/h3[text()='%s']", teamName))).click();
-		
-		return new CareersTeamPage(driver);
-	}
+//	public CareersTeamPage gotoCareersTeamPage(String teamName) {
+//		getBtnSeeAllTeams().click();		
+//		driver.findElement(By.xpath(String.format("//a/h3[text()='%s']", teamName))).click();
+//		
+//		return new CareersTeamPage(driver);
+//	}
 	
 }

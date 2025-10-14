@@ -6,15 +6,12 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-
-import thanhle.insider.customazation.Driver;
+import thanhle.insider.customazation.DriverManager;
 import thanhle.insider.dataobject.Job;
 
 public class OpenPositionsPage extends GeneralPage {
 
-	public OpenPositionsPage(Driver driver) {
-		super(driver);
+	public OpenPositionsPage() {
 		waitForPageDisplayed();
 	}
 
@@ -25,33 +22,43 @@ public class OpenPositionsPage extends GeneralPage {
 	private By cbbDepartmentLoc = By.xpath("//span[@id='select2-filter-by-department-container']");
 
 	protected WebElement getLbResultCounter() {
-		return driver.findElement(lbResultCounterLoc);
+		return DriverManager.getDriver().findElement(lbResultCounterLoc);
 	}
 
 	protected WebElement getCbbLocation() {
-		return driver.findElement(cbbLocationLoc);
+		return DriverManager.getDriver().findElement(cbbLocationLoc);
 	}
 	
 	protected WebElement getBtnClearLocation() {
-		return driver.findElement(btnClearLocationLoc);
+		return DriverManager.getDriver().findElement(btnClearLocationLoc);
 	}
 
 	protected WebElement getCbbLocationItem(String value) {
-		return driver.findElement(
+		return DriverManager.getDriver().findElement(
 				By.xpath(String.format("//ul[@id='select2-filter-by-location-results']/li[text()='%s']", value)));
 	}
 
 	protected WebElement getCbbDepartment() {
-		return driver.findElement(cbbDepartmentLoc);
+		return DriverManager.getDriver().findElement(cbbDepartmentLoc);
 	}
 
 	protected WebElement getCbbDepartmentItem(String value) {
-		return driver.findElement(
+		return DriverManager.getDriver().findElement(
 				By.xpath(String.format("//ul[@id='select2-filter-by-department-results']/li[text()='%s']", value)));
 	}
+	
+	protected WebElement getPanelJobByIndex(int index) {
+		return DriverManager.getDriver().findElement(
+				By.xpath(String.format("(//div[@id='jobs-list']/div)[%d]", index)));
+	}
+	
+	protected WebElement getBtnViewJobByIndex(int index) {
+		return DriverManager.getDriver().findElement(
+				By.xpath(String.format("(//div[@id='jobs-list']/div)[%d]/div/a", index)));
+	}	
 
 	public void waitForPageDisplayed() {
-		driver.waitUntilElementVisible(lbResultCounterLoc);
+		DriverManager.getDriver().waitUntilElementVisible(lbResultCounterLoc);
 	}
 
 	public OpenPositionsPage filterJobs(String location, String department) throws InterruptedException {
@@ -59,7 +66,7 @@ public class OpenPositionsPage extends GeneralPage {
 		
 		do {
 			getCbbLocation().click();
-			List<WebElement> locationList = driver.waitUntilElementsVisible(By.xpath("//ul[@id='select2-filter-by-location-results']/li"));
+			List<WebElement> locationList = DriverManager.getDriver().waitUntilElementsVisible(By.xpath("//ul[@id='select2-filter-by-location-results']/li"));
 			if(locationList.size() > 1) {
 				break;
 			}
@@ -69,23 +76,17 @@ public class OpenPositionsPage extends GeneralPage {
 			i--;
 		} while (i > 0);
 
-		WebElement locationItem = getCbbLocationItem(location);
-		Actions actions = new Actions(driver.getWebDriver());
-		actions.moveToElement(locationItem);
-		actions.perform();
-		locationItem.click();
-		
+		getCbbLocationItem(location).click();		
 		getCbbDepartment().click();
-		WebElement departmentItem = getCbbDepartmentItem(department);
-		actions.moveToElement(departmentItem);
-		actions.perform();
-		departmentItem.click();
+		getCbbDepartmentItem(department).click();
+		
+		DriverManager.getDriver().waitUntilElementVisible(By.xpath("//span[@id='deneme' and string-length(text()) > 0] "));
 		
 		String jobListXpath = String.format("//div[@id='jobs-list']/div[@data-location='%s' and @data-team='%s']", 
 				location.toLowerCase().replace(", ", "-"),
 				department.toLowerCase().replace(" ", ""));
 				
-		driver.waitUntilElementVisible(By.xpath(jobListXpath));
+		DriverManager.getDriver().waitUntilElementVisible(By.xpath(jobListXpath));
 		
 		return this;
 	}	
@@ -93,12 +94,12 @@ public class OpenPositionsPage extends GeneralPage {
 	public List<Job> getAllDisplayedJobs(){
 		List<Job> jobs = new ArrayList<Job>();
 		
-		int jobSize = driver.findElements(By.xpath(jobListItemXpath)).size();
+		int jobSize = DriverManager.getDriver().findElements(By.xpath(jobListItemXpath)).size();
 				
 		for (int i = 1; i < jobSize + 1; i++) {
-			String position = driver.findElement(By.xpath(String.format("%s[%d]/div/p", jobListItemXpath, i))).getText();
-			String department = driver.findElement(By.xpath(String.format("%s[%d]/div/span", jobListItemXpath, i))).getText();
-			String location = driver.findElement(By.xpath(String.format("%s[%d]/div/div", jobListItemXpath, i))).getText();
+			String position = DriverManager.getDriver().findElement(By.xpath(String.format("%s[%d]/div/p", jobListItemXpath, i))).getText();
+			String department = DriverManager.getDriver().findElement(By.xpath(String.format("%s[%d]/div/span", jobListItemXpath, i))).getText();
+			String location = DriverManager.getDriver().findElement(By.xpath(String.format("%s[%d]/div/div", jobListItemXpath, i))).getText();
 			
 			jobs.add(new Job(position, department, location));
 		}		
@@ -106,16 +107,15 @@ public class OpenPositionsPage extends GeneralPage {
 		return jobs;
 	}
 	
-	public JobLeverPage viewJob(int jobIndex) {
-		String jobXpath = String.format("(//div[@id='jobs-list']/div)[%d]", jobIndex);
+	public JobLeverPage viewJob(int jobIndex) throws InterruptedException {
+		DriverManager.getDriver().scrollToElement(getPanelJobByIndex(jobIndex));
+		DriverManager.getDriver().moveToElement(getPanelJobByIndex(jobIndex));
+		getPanelJobByIndex(jobIndex).click();
 		
-		Actions actions = new Actions(driver.getWebDriver());
-		actions.moveToElement(driver.findElement(By.xpath(jobXpath)));
-		actions.perform();	
+		DriverManager.getDriver().moveToElement(DriverManager.getDriver().waitUntilElementVisible(getBtnViewJobByIndex(jobIndex)));
+		getBtnViewJobByIndex(jobIndex).click();
 		
-		driver.findElement(By.xpath(String.format("%s/div/a", jobXpath))).click();
-		
-		return new JobLeverPage(driver);
+		return new JobLeverPage();
 	}
 	
 }

@@ -3,22 +3,22 @@
 <suite parallel="tests" name="ThanhLeTestSuite">
 	<parameter name="webURL" value="https://useinsider.com/" />
 	<parameter name="implicitWaitTimeout" value="10" />
-	<parameter name="explicitWaitTimeout" value="10" />
+	<parameter name="explicitWaitTimeout" value="30" />
 	<parameter name="pageLoadTimeout" value="30" />
 	
 	<test thread-count="5" parallel="methods" name="ChromeTest">
 		<parameter name="browser" value="Chrome" />
 		<classes>
 			<class
-				name="thanhle.insider.web.CareersTest" />
+				name="thanhle.insider.test.web.CareersTest" />
 		</classes>
 	</test>
 	
-	<!--<test thread-count="5" parallel="methods" name="FireFoxTest">
+	<test thread-count="5" parallel="methods" name="FireFoxTest">
 		<parameter name="browser" value="FireFox" />
 		<classes>
 			<class
-				name="thanhle.insider.web.CareersTest" />
+				name="thanhle.insider.test.web.CareersTest" />
 		</classes>
-	</test>-->
+	</test>
 </suite>

@@ -1,16 +1,15 @@
 package thanhle.insider.pageobject;
 
-import thanhle.insider.customazation.Driver;
+import thanhle.insider.customazation.DriverManager;
 
 public class HomePage extends GeneralPage{
 	
-	public HomePage(Driver driver) {
-		super(driver);
+	public HomePage() {
 		waitForPageDisplayed();
 	}
 	
 	public void waitForPageDisplayed() {
-		driver.waitUntilElementVisible(lnkLoginLoc);
+		DriverManager.getDriver().waitUntilElementVisible(lnkLoginLoc);
 	}	
 	
 	public boolean isDisplayed() {		
