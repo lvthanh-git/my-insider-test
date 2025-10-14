@@ -1,15 +1,15 @@
 package thanhle.insider.dataobject;
 
 public class Tag {
-	private long id;
+	private int id;
 	private String name;
 
 	// Getters and setters
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -10,7 +10,7 @@ import io.restassured.response.ResponseBody;
 import tools.jackson.databind.ObjectMapper;
 
 public class Pet {
-	private long id;
+	private int id;
 	private Category category;
 	private String name;
 	private List<String> photoUrls;
@@ -30,11 +30,11 @@ public class Pet {
         }
     } 
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
