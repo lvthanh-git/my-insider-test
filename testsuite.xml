@@ -5,8 +5,24 @@
 	<parameter name="implicitWaitTimeout" value="10" />
 	<parameter name="explicitWaitTimeout" value="30" />
 	<parameter name="pageLoadTimeout" value="30" />
+	<parameter name="baseUrl" value="https://petstore.swagger.io/v2" />
 	
-	<test thread-count="5" parallel="methods" name="ChromeTest">
+	<listeners>
+        <listener class-name="thanhle.insider.utility.ExtentReportListener" />
+    </listeners>
+    
+    <test thread-count="2" parallel="methods" name="APIPetTest">
+    	<parameter name="test-type" value="API" />
+		<classes>
+			<class name="thanhle.insider.test.api.GetPetTest" />
+			<class name="thanhle.insider.test.api.PostPetTest" />
+			<class name="thanhle.insider.test.api.PutPetTest" />
+			<class name="thanhle.insider.test.api.DeletePetTest" />
+		</classes>
+	</test>	
+	
+	<test thread-count="2" parallel="methods" name="ChromeTest">
+		<parameter name="test-type" value="UI" />
 		<parameter name="browser" value="Chrome" />
 		<classes>
 			<class
@@ -14,11 +30,13 @@
 		</classes>
 	</test>
 	
-	<test thread-count="5" parallel="methods" name="FireFoxTest">
+	<test thread-count="2" parallel="methods" name="FireFoxTest">
+		<parameter name="test-type" value="UI" />
 		<parameter name="browser" value="FireFox" />
 		<classes>
 			<class
 				name="thanhle.insider.test.web.CareersTest" />
 		</classes>
 	</test>
+	
 </suite>

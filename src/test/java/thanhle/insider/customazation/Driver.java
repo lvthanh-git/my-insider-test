@@ -1,10 +1,17 @@
 package thanhle.insider.customazation;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,7 +24,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Driver {
 	private WebDriver driver;
 	private int explicitWaitTimeout;
-
+    private final String screenshot_path = "target/screenshots/";
+    
 	public Driver(String browser) throws Exception {
 		if (browser.toLowerCase().equals("chrome")) {
 			ChromeOptions options = new ChromeOptions();
@@ -107,5 +115,25 @@ public class Driver {
 			throw e;
 		}
 	}
+	
+	public String captureScreenshot(String name) {
+        try {
+            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+            File dir = new File(screenshot_path);
+            if (!dir.exists()) dir.mkdirs();
+
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String destPath = screenshot_path + name + "_" + timestamp + ".png";
+
+            File destFile = new File(destPath);
+            Files.copy(srcFile.toPath(), destFile.toPath());
+
+            return destPath;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

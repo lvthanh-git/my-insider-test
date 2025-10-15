@@ -25,6 +25,10 @@ public class PetFunction {
 	public Response getPet(int id) {
 		return RestAssured.get(String.format("/pet/%d", id));
 	}
+	
+	public Response getPet(long id) {
+		return RestAssured.get(String.format("/pet/%d", id));
+	}
 
 	public Response getPet(String id) {
 		return RestAssured.get(String.format("/pet/%s", id));

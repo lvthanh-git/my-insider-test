@@ -5,8 +5,8 @@ import thanhle.insider.api.function.PetFunction;
 import thanhle.insider.dataobject.Pet;
 import thanhle.insider.dataobject.Tag;
 
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -19,16 +19,13 @@ public class BaseTest {
 	protected final String apiKey = "special-key";
 	protected PetFunction petFunction = new PetFunction();
 	
+	@Parameters({ "baseUrl"})
 	@BeforeSuite
-	public void beforeSuite() {
-		RestAssured.baseURI = "https://petstore.swagger.io/v2";
+	public void beforeSuite(String baseUrl) {
+		RestAssured.baseURI = baseUrl;
 	}
 	
-	protected void assertPet(Pet actual, Pet expected) {
-		
-		System.out.println(actual.toString());
-		System.out.println(expected.toString());
-		
+	protected void assertPet(Pet actual, Pet expected) {		
 		assertEquals(actual.getName(), expected.getName(), "Pet's name is not as expected");
 		assertEquals(actual.getStatus(), expected.getStatus(), "Pet's status is not as expected");
 		assertEquals(actual.getCategory().getId(), expected.getCategory().getId(), "Pet's name is not as expected");

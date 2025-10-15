@@ -6,16 +6,19 @@ import org.testng.annotations.Test;
 
 import io.restassured.response.Response;
 import thanhle.insider.dataobject.Pet;
+import thanhle.insider.utility.ExtentReportListener;
 
 public class PostPetTest extends BaseTest {
 		
 	@Test
-	public void postPetTest_valid() {
+	public void TC10010() {
+		ExtentReportListener.logInfo("POST Pet with valid request");
 		Pet pet = new Pet();
 		pet.initData();
 		Response response = petFunction.createPet(pet);
-		assertEquals(response.getStatusCode(), 200, "Status code should be 200");
+		ExtentReportListener.logResponse("Response Body", response.asPrettyString());
 		
+		assertEquals(response.getStatusCode(), 200, "Status code should be 200");		
 		Pet actualPet = Pet.fromResponse(response.getBody());
 		assertPet(actualPet, pet);
 	}
@@ -44,16 +47,18 @@ public class PostPetTest extends BaseTest {
         String emptyJson = "{}";
 
         return new Object[][]{         
-            {missingName, 405, "Invalid input"},
-            {invalidStatus, 405, "Invalid input"},
-            {emptyJson, 405, "Invalid input"}
+            {"POST Pet without name", missingName, 405, "Invalid input"},
+            {"POST Pet with invalid status", invalidStatus, 405, "Invalid input"},
+            {"POST Pet empty data", emptyJson, 405, "Invalid input"}
         };
     }
 	
 	@Test(dataProvider = "invalidCreatePetData")
-    public void postPetTest_invalid(String jsonBody, int expectedStatus, String expectedMessage) {
-        Response response = petFunction.createPet(jsonBody);
-
+    public void TC10011_TC10012_TC10013(String testName, String jsonBody, int expectedStatus, String expectedMessage) {
+		ExtentReportListener.logInfo(testName);
+		Response response = petFunction.createPet(jsonBody);
+		
+		ExtentReportListener.logResponse("Response Body", response.asPrettyString());
         assertEquals(response.statusCode(), expectedStatus, "Unexpected status code for input");
         assertEquals(response.jsonPath().getInt("code"), 1, "Error code mismatch");
         assertEquals(response.jsonPath().getString("type"), "error", "Error type should be 'error'");
