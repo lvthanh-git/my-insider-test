@@ -1,9 +1,19 @@
 # Insider Test Automation Framework
 
 This project is a **TestNG-based automation framework** built using **Java**, **Maven**, **Selenium**, **RESTAssured**, and **Extent Reports**.  
-It supports both **UI** and **API** testing, with configurable suites and environment parameters.
+It supports both **UI** and **API** testing, with configurable suites and environment parameters. All test cases can be executed in parallel.
 
 ---
+## Test Framework Structure
+
+The project contains multiple categories of automated tests, organized as follows:
+
+1) API Tests are located under the package: **thanhle.insider.test.api**
+
+2) Web Tests are located under the package: **thanhle.insider.test.web**
+
+3) Performance Tests are Temporarily placed in the folder: **performance-testing/**
+
 
 ## Prerequisites
 
